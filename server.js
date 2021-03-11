@@ -14,9 +14,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Runs when client connects
 io.on('connection', (socket) => {
-  console.log('New WS Connection...');
-
+  // Emits to single user connecting
   socket.emit('message', 'Welcome to TuneIn!');
+
+  // Broadcast to everyone but user when user connects
+  socket.broadcast.emit('message', 'A user has joined the chat');
+
+  // Runs when client disconnects
+  socket.on('disconnect', () => {
+    io.emit('message', 'A user has left the chat');
+  });
+
+  // Listens for chatMessage
+  socket.on('chatMessage', (msg) => {
+    io.emit('message', msg);
+  });
 });
 
 const PORT = process.env.PORT || 8080;
