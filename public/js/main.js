@@ -34,8 +34,8 @@ function outputMessage(message) {
   const div = document.createElement('div');
   // Adds a 'message' class to newly created div
   div.classList.add('message');
-  div.innerHTML = `<p class="meta" id="name">Brandon <span>9:12pm</span></p>
-  <p class="text">${message}</p>`;
+  div.innerHTML = `<p class="meta" id="name">${message.username}<span> ${message.time}</span></p>
+  <p class="text">${message.text}</p>`;
   // Find "chat-messages" class and add the div to it
   document.querySelector('.chat-messages').appendChild(div);
 }
