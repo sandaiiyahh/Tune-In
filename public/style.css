@@ -8,6 +8,20 @@
   --error-color: #d9534f;
 }
 
+.video-container {
+  height: 100%;
+  position: relative;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  width: 60%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 h1 {
   font-family: 'Raleway';
 }
@@ -62,11 +76,14 @@ button:hover {
 }
 
 .chat-container {
-  max-width: 400px;
+  /* max-width: 400px; */
+  max-width: 40%;
+  position: absolute;
+  top: 0;
+  right: 0;
   background: #fff;
-  margin: 30px auto;
+  margin: auto;
   overflow: hidden;
-  float: right;
 }
 
 .chat-header {
