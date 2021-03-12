@@ -29,16 +29,7 @@
             <li>Michele</li>
           </ul>
         </div>
-        <div class="chat-messages">
-          <div class="message">
-            <p class="meta" id="name">Brandon <span>9:12pm</span></p>
-            <p class="text">Wow, so cool!</p>
-          </div>
-          <div class="message">
-            <p class="meta" id="name">Shirley <span>9:15pm</span></p>
-            <p class="text">I know right!</p>
-          </div>
-        </div>
+        <div class="chat-messages"></div>
       </main>
       <div class="chat-form-container">
         <form id="chat-form">
@@ -56,6 +47,13 @@
         </form>
       </div>
     </div>
+    <!-- Scans and grabs values from URL -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.6/qs.min.js"
+      integrity="sha512-3TmPrquYLaAsUmZKXRARTDC5siWhLAdBVqNo4dWpDABBtLU62AaoTaQJEvjxjExcZYurO6i1dnK85k8pPIBlRg=="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Socket that main.js will also have access to -->
     <script src="/socket.io/socket.io.js"></script>
     <script defer src="js/main.js"></script>
   </body>
