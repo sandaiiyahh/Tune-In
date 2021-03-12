@@ -10,6 +10,7 @@
   "author": "Sandy Dai",
   "license": "MIT",
   "dependencies": {
+    "@joeattardi/emoji-button": "^4.6.0",
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "socket.io": "^2.4.0"

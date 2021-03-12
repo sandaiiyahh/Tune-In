@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
       .to(user.room)
       .emit(
         'message',
-        formatMessage(botName, `${user.username} has joined the chat`)
+        formatMessage(botName, `${user.username} has joined the chat.`)
       );
 
     // Sends everyone users inside room info
@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
     if (user) {
       io.to(user.room).emit(
         'message',
-        formatMessage(botName, `${user.username} has left the chat`)
+        formatMessage(botName, `${user.username} has left the chat.`)
       );
       // Sends everyone UPDATED users inside room
       io.to(user.room).emit('roomUsers', {

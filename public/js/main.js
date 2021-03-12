@@ -1,5 +1,11 @@
-// Accesses chat input form
+// Accesses chat form
 const chatForm = document.getElementById('chat-form');
+
+// Access chat input by id
+const msgInput = document.getElementById('msg');
+
+// Accesses emoji button
+const emojiBtn = document.getElementById('emoticon');
 
 // Accesses chat messages div so we can implement scroll
 const chatMessages = document.querySelector('.chat-messages');
@@ -41,6 +47,21 @@ socket.on('message', (message) => {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
+// Implement emojis into message form
+let picker = new EmojiButton({
+  position: 'bottom-start',
+});
+
+// User's picked emoji gets added to input form
+picker.on('emoji', (emoji) => {
+  msgInput.value += emoji;
+});
+
+// Event Listener on Emoji Button
+emojiBtn.addEventListener('click', () => {
+  picker.pickerVisible ? picker.hidePicker() : picker.showPicker(emojiBtn);
+});
+
 // Event Listener on Chat Message Form
 chatForm.addEventListener('submit', (evt) => {
   // prevents form from refreshing after submitting
@@ -66,7 +87,6 @@ function outputMessage(message) {
   div.classList.add('message');
   div.innerHTML = `<p class="meta" id="name">${message.username}<span> ${message.time}</span></p>
   <p class="text">${message.text}</p>`;
-  console.log(message.username);
   if (message.username === 'Cody Bot') {
     div.insertAdjacentHTML(
       'afterbegin',
