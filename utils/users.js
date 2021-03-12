@@ -25,12 +25,18 @@ function removeUser(id) {
     return users.splice(idx, 1)[0];
     // Ex. If we're removing Feb (which is idx of 2)
     // ['Jan', 'Feb', 'March', 'April'] ---> ['Jan', 'March', 'April']
+    // returns the removed ['Feb'] so [0] --> 'Feb'
   }
 }
 
 // GET users in a certain room
+function getRoomUsers(room) {
+  return users.filter((user) => user.room === room);
+}
 
 module.exports = {
   joinUser,
   getCurrentUser,
+  removeUser,
+  getRoomUsers,
 };
