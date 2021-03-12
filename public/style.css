@@ -41,6 +41,14 @@ a {
   border: 0;
   font-size: 17px;
 }
+
+/* Hover Effect */
+#leave-room:hover,
+#join-room:hover,
+button:hover {
+  background-color: #ce4e45;
+}
+
 /* Chat Page */
 
 #emoticon {
