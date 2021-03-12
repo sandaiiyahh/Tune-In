@@ -49,6 +49,10 @@ a {
   margin-top: 5px;
 }
 
+#happy-face:hover {
+  color: black;
+}
+
 .chat-container {
   max-width: 400px;
   background: #fff;
