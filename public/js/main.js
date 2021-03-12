@@ -1,8 +1,17 @@
-// Accesses chat form
+// Accesses chat input form
 const chatForm = document.getElementById('chat-form');
+// Accesses chat messages div so we can implement scroll
 const chatMessages = document.querySelector('.chat-messages');
 
+// Get username and room from URL
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
+
 const socket = io();
+
+// Join chat room, passing in username & room
+socket.emit('joinRoom', { username, room });
 
 // Message received from server
 socket.on('message', (message) => {
