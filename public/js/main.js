@@ -1,7 +1,14 @@
 // Accesses chat input form
 const chatForm = document.getElementById('chat-form');
+
 // Accesses chat messages div so we can implement scroll
 const chatMessages = document.querySelector('.chat-messages');
+
+// Accesses room name h2
+const roomName = document.getElementById('room-name');
+
+// Accesses users ul
+const usersList = document.getElementById('users');
 
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
@@ -10,8 +17,20 @@ const { username, room } = Qs.parse(location.search, {
 
 const socket = io();
 
-// Join chat room, passing in username & room
+/* --------------------------------------------------------- */
+
+/* ROOM INFO */
+
+// Passing in username & room info to server
 socket.emit('joinRoom', { username, room });
+
+// Get users in room info
+socket.on('roomUsers', ({ room, users }) => {
+  outputRoomName(room);
+  outputUsers(users);
+});
+
+/* MESSAGES */
 
 // Message received from server
 socket.on('message', (message) => {
@@ -38,6 +57,8 @@ chatForm.addEventListener('submit', (evt) => {
   evt.target.elements.msg.focus();
 });
 
+/* MESSAGE FUNCTION */
+
 // Output message to DOM
 function outputMessage(message) {
   const div = document.createElement('div');
@@ -47,4 +68,18 @@ function outputMessage(message) {
   <p class="text">${message.text}</p>`;
   // Find "chat-messages" class and add the div to it
   document.querySelector('.chat-messages').appendChild(div);
+}
+
+/* OUTPUT USERS & ROOM INFO FUNCTION */
+
+// Add room name to DOM
+function outputRoomName(room) {
+  roomName.innerText = room;
+}
+
+// Add users to DOM (takes in an array)
+function outputUsers(users) {
+  usersList.innerHTML = `
+    ${users.map((user) => `<li>${user.username}</li>`).join('')}
+  `;
 }

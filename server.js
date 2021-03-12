@@ -5,7 +5,12 @@ const socketio = require('socket.io');
 // formatMessage takes in a username & message
 const formatMessage = require('./utils/messages');
 // Two user related functions
-const { joinUser, getCurrentUser } = require('./utils/users');
+const {
+  joinUser,
+  getCurrentUser,
+  removeUser,
+  getRoomUsers,
+} = require('./utils/users');
 
 const app = express();
 
@@ -30,7 +35,7 @@ io.on('connection', (socket) => {
     socket.join(user.room);
 
     // Emits to single user connecting
-    socket.emit('message', formatMessage(botName, 'Welcome to TuneIn!'));
+    socket.emit('message', formatMessage(botName, 'Welcome to Tune In!'));
 
     // Broadcast to everyone but user when user connects
     socket.broadcast
@@ -39,6 +44,12 @@ io.on('connection', (socket) => {
         'message',
         formatMessage(botName, `${user.username} has joined the chat`)
       );
+
+    // Sends everyone users inside room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room),
+    });
   });
 
   // Listens for chatMessage
@@ -51,7 +62,18 @@ io.on('connection', (socket) => {
 
   // Runs when client disconnects
   socket.on('disconnect', () => {
-    io.emit('message', formatMessage(botName, 'A user has left the chat'));
+    const user = removeUser(socket.id);
+    if (user) {
+      io.to(user.room).emit(
+        'message',
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+      // Sends everyone UPDATED users inside room
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room),
+      });
+    }
   });
 });
 
