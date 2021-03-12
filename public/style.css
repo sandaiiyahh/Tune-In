@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap');
 
 :root {
-  --dark-color-a: #666b7a;
+  --dark-color-a: #eebd5b;
   --dark-color-b: #ffffff;
-  --light-color: #7fce78;
+  --light-color: #d8645c;
   --success-color: #5cb85c;
   --error-color: #d9534f;
 }
@@ -21,7 +21,7 @@ h1 {
 body {
   font-family: 'Raleway', sans-serif;
   font-size: 14px;
-  background: #add4e0;
+  background: #f4f4f4;
   margin: 20px;
 }
 
@@ -44,8 +44,8 @@ a {
 /* Chat Page */
 
 #emoticon {
-  background-color: #666b7a;
-  opacity: 10%;
+  background-color: #f3b02b1c;
+  opacity: 50%;
   margin-top: 5px;
 }
 
@@ -74,16 +74,15 @@ a {
 }
 
 .chat-sidebar {
-  background: #7a7f8b;
-  padding: 20px 20px 60px;
+  background: rgb(177, 174, 169);
+  padding: 20px 10px 60px;
   overflow-y: scroll;
   color: white;
 }
 
 .chat-sidebar h2 {
-  font-size: 20px;
-  background: rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  background: rgba(165, 163, 159, 0.198);
+  padding: 5px 0px 5px 5px;
   margin-bottom: 20px;
 }
 
@@ -103,12 +102,13 @@ a {
 
 #room-name {
   font-size: 10px;
+  width: 5rem;
 }
 
 .chat-messages .message {
   padding: 10px;
   margin-bottom: 15px;
-  background-color: #8ed2fa;
+  background-color: #f3cf86;
   border-radius: 5px;
 }
 
@@ -125,7 +125,7 @@ a {
 }
 
 #name {
-  color: #353538;
+  color: #5d5d5c;
 }
 
 .chat-messages p {
@@ -134,7 +134,7 @@ a {
 
 .chat-form-container {
   padding: 20px 30px;
-  background-color: var(--dark-color-a);
+  background-color: rgb(182, 173, 159);
 }
 
 .chat-form-container form {
@@ -153,6 +153,12 @@ a {
   max-width: 500px;
   margin: 80px auto;
   color: #fff;
+}
+
+#tv {
+  margin: auto;
+  margin-bottom: 15px;
+  display: block;
 }
 
 .join-header {
