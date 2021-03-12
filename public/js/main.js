@@ -66,6 +66,13 @@ function outputMessage(message) {
   div.classList.add('message');
   div.innerHTML = `<p class="meta" id="name">${message.username}<span> ${message.time}</span></p>
   <p class="text">${message.text}</p>`;
+  console.log(message.username);
+  if (message.username === 'Cody Bot') {
+    div.insertAdjacentHTML(
+      'afterbegin',
+      '<img src="https://www.dogbible.com/resized/pug-breed-description_default_600.png" width="30rem" />'
+    );
+  }
   // Find "chat-messages" class and add the div to it
   document.querySelector('.chat-messages').appendChild(div);
 }
