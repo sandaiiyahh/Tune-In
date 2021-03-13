@@ -16,6 +16,9 @@ const roomName = document.getElementById('room-name');
 // Accesses users ul
 const usersList = document.getElementById('users');
 
+// Accesses Insert YouTube URL form
+const youtubeForm = document.getElementById('youtube-form');
+
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
@@ -154,3 +157,14 @@ function onPlayerStateChange(event) {
 function stopVideo() {
   player.stopVideo();
 }
+
+// Event Listener on Insert YouTube Link
+youtubeForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const videoURL = evt.target.elements['youtube-insert'].value;
+  // Emits input message to server
+  socket.emit('newVideo', videoURL);
+
+  // Clears input message
+  evt.target.elements['youtube-insert'].value = '';
+});

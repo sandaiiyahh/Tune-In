@@ -4,7 +4,6 @@ const express = require('express');
 const socketio = require('socket.io');
 // formatMessage takes in a username & message
 const formatMessage = require('./utils/messages');
-// Two user related functions
 const {
   joinUser,
   getCurrentUser,
