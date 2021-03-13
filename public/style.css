@@ -250,6 +250,18 @@ button:hover {
     display: none;
   }
   .chat-container {
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .video-container iframe,
+  .video-container object,
+  .video-container embed {
+    width: 100%;
+    position: relative;
+  }
+  .video-container {
+    height: 100%;
     display: block;
   }
 }
