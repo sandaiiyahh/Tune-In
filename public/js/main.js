@@ -20,7 +20,7 @@ const usersList = document.getElementById('users');
 const youtubeForm = document.getElementById('youtube-form');
 
 //Accesses iframe
-const video = document.getElementById('iframe');
+const video = document.getElementById('player');
 
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
@@ -145,18 +145,26 @@ function onPlayerReady(evt) {
   evt.target.playVideo();
 }
 // The API calls this function when the player's state changes.
-var done = false;
 function onPlayerStateChange(event) {
-  console.log('change state to ' + event.data);
-  // if (event.data == YT.PlayerState.PLAYING && !done) {
-  //   setTimeout(stopVideo, 6000);
-  //   done = true;
-  // }
+  switch (event.data) {
+    case 0:
+      console.log('Video ended.');
+      break;
+    case 1:
+      console.log('Video playing from ' + player.getCurrentTime());
+      break;
+    case 2:
+      console.log('Video paused.');
+      break;
+  }
 }
 
 // Listening to server; Loads video once id is recieved
 socket.on('loadVideo', (id) => {
-  video.setAttribute('src', `https://www.youtube.com/embed/${id}?autoplay=1`);
+  video.setAttribute(
+    'src',
+    `https://www.youtube.com/embed/${id}?autoplay=1&enablejsapi=1`
+  );
 });
 
 function stopVideo() {
