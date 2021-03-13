@@ -2,6 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
+let getYouTubeID = require('get-youtube-id');
 // formatMessage takes in a username & message
 const formatMessage = require('./utils/messages');
 const {
@@ -57,6 +58,12 @@ io.on('connection', (socket) => {
     // socket.id is from line 23 (the passed in socket)
     const user = getCurrentUser(socket.id);
     io.to(user.room).emit('message', formatMessage(`${user.username}`, msg));
+  });
+
+  socket.on('newVideo', (url) => {
+    const user = getCurrentUser(socket.id);
+    const id = getYouTubeID(url);
+    io.to(user.room).emit('loadVideo', id);
   });
 
   // Runs when client disconnects

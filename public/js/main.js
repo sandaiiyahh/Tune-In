@@ -19,6 +19,9 @@ const usersList = document.getElementById('users');
 // Accesses Insert YouTube URL form
 const youtubeForm = document.getElementById('youtube-form');
 
+//Accesses iframe
+const video = document.getElementById('iframe');
+
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
@@ -124,35 +127,37 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 // This function creates an <iframe> (and video player) AFTER the API code downloads
 let player;
-function onYouTubeIframeAPIReady() {
+window.onYouTubeIframeAPIReady = function () {
   player = new YT.Player('player', {
-    height: '390',
-    width: '640',
-    videoId: 'tyrVtwE8Gv0',
-    // playerVars = player properties
+    // height: '390',
+    // width: '640',
+    // videoId: 'tyrVtwE8Gv0',
     playerVars: { autoplay: 1 },
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange,
     },
   });
-}
+};
 
 // The API will call this function when the video player is ready
 function onPlayerReady(evt) {
   evt.target.playVideo();
 }
-
 // The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
 var done = false;
 function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
-    done = true;
-  }
+  console.log('change state to ' + event.data);
+  // if (event.data == YT.PlayerState.PLAYING && !done) {
+  //   setTimeout(stopVideo, 6000);
+  //   done = true;
+  // }
 }
+
+// Listening to server; Loads video once id is recieved
+socket.on('loadVideo', (id) => {
+  video.setAttribute('src', `https://www.youtube.com/embed/${id}?autoplay=1`);
+});
 
 function stopVideo() {
   player.stopVideo();
@@ -161,9 +166,9 @@ function stopVideo() {
 // Event Listener on Insert YouTube Link
 youtubeForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const videoURL = evt.target.elements['youtube-insert'].value;
+  const url = evt.target.elements['youtube-insert'].value;
   // Emits input message to server
-  socket.emit('newVideo', videoURL);
+  socket.emit('newVideo', url);
 
   // Clears input message
   evt.target.elements['youtube-insert'].value = '';
