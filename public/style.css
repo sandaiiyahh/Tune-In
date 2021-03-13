@@ -249,4 +249,7 @@ button:hover {
   .chat-sidebar {
     display: none;
   }
+  .chat-container {
+    display: block;
+  }
 }
