@@ -178,8 +178,6 @@ function onPlayerStateChange(evt) {
         console.log('TITLE RAN');
         socket.emit('sendTitle', videoInfo.title);
       }
-      // console.log('current time --->', currentTime);
-      // console.log('previous time --->', prevTime);
       checkTime(prevTime, currentTime);
       prevTime = currentTime;
       break;
@@ -232,12 +230,7 @@ youtubeForm.addEventListener('submit', (evt) => {
 });
 
 function checkTime(prevTime, currentTime) {
-  // if (Math.abs(previousTime - currentTime) > 1) {
-  //   console.log('seek');
-  //   socket.emit('toSeek', currentTime);
-  // }
   if (Math.abs(prevTime - currentTime) > 1) {
-    console.log('SEEKKK!!!');
     socket.emit('toSeek', currentTime);
   }
 }
