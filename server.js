@@ -52,6 +52,15 @@ io.on('connection', (socket) => {
     });
   });
 
+  // Listens for sendTitle
+  socket.on('sendTitle', (title) => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit(
+      'message',
+      formatMessage(botName, `📺 Now Playing: ${title}`)
+    );
+  });
+
   // Listens for chatMessage
   socket.on('chatMessage', (msg) => {
     // Retrieves user info from passed in id

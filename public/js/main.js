@@ -129,6 +129,9 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 let player;
 window.onYouTubeIframeAPIReady = function () {
   player = new YT.Player('player', {
+    height: '390',
+    width: '640',
+    videoId: 'tyrVtwE8Gv0',
     playerVars: { autoplay: 1 },
     events: {
       onReady: onPlayerReady,
@@ -141,7 +144,6 @@ let prevTime;
 
 // The API will call this function when the video player is ready
 function onPlayerReady(evt) {
-  console.log('ON PLAYER READY RAN!!');
   // evt.target.playVideo();
   let playButton = document.getElementById('play-button');
   playButton.addEventListener('click', function () {
@@ -162,7 +164,6 @@ function stopVideo() {
 
 // The API calls this function when the player's state changes.
 function onPlayerStateChange(evt) {
-  console.log('ON PLAYER STATE CHANGE RAN!!');
   switch (evt.data) {
     case 0:
       console.log('Video ended.');
@@ -172,8 +173,13 @@ function onPlayerStateChange(evt) {
       console.log('Playing video.');
       socket.emit('videoPlay');
       let currentTime = player.getCurrentTime();
-      console.log('current time --->', currentTime);
-      console.log('previous time --->', prevTime);
+      if (Math.round(currentTime) === 0) {
+        let videoInfo = player.getVideoData();
+        console.log('TITLE RAN');
+        socket.emit('sendTitle', videoInfo.title);
+      }
+      // console.log('current time --->', currentTime);
+      // console.log('previous time --->', prevTime);
       checkTime(prevTime, currentTime);
       prevTime = currentTime;
       break;
@@ -205,11 +211,13 @@ socket.on('seekTo', (time) => {
 
 // Listening to server; Loads video once id is recieved
 socket.on('loadVideo', (id) => {
-  video.setAttribute(
-    'src',
-    `https://www.youtube.com/embed/${id}?enablejsapi=1`
-  );
+  // video.setAttribute(
+  //   'src',
+  //   `https://www.youtube.com/embed/${id}?enablejsapi=1`
+  // );
   console.log('loading new video!!!');
+  player.loadVideoById(id);
+  return false;
 });
 
 // Event Listener on Insert YouTube Link
