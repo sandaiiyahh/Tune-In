@@ -79,6 +79,12 @@ io.on('connection', (socket) => {
     io.to(user.room).emit('playVideo');
   });
 
+  // Listens for a time jump in video
+  socket.on('toSeek', (time) => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit('seekTo', time);
+  });
+
   // Runs when client disconnects
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);

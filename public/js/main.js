@@ -137,8 +137,11 @@ window.onYouTubeIframeAPIReady = function () {
   });
 };
 
+let prevTime;
+
 // The API will call this function when the video player is ready
 function onPlayerReady(evt) {
+  console.log('ON PLAYER READY RAN!!');
   // evt.target.playVideo();
   let playButton = document.getElementById('play-button');
   playButton.addEventListener('click', function () {
@@ -158,8 +161,9 @@ function stopVideo() {
 }
 
 // The API calls this function when the player's state changes.
-function onPlayerStateChange(event) {
-  switch (event.data) {
+function onPlayerStateChange(evt) {
+  console.log('ON PLAYER STATE CHANGE RAN!!');
+  switch (evt.data) {
     case 0:
       console.log('Video ended.');
       break;
@@ -167,6 +171,11 @@ function onPlayerStateChange(event) {
       // 1 = Video starts playing
       console.log('Playing video.');
       socket.emit('videoPlay');
+      let currentTime = player.getCurrentTime();
+      console.log('current time --->', currentTime);
+      console.log('previous time --->', prevTime);
+      checkTime(prevTime, currentTime);
+      prevTime = currentTime;
       break;
     case 2:
       // 2 = Video has paused
@@ -178,7 +187,6 @@ function onPlayerStateChange(event) {
 
 // Listening to server; Plays video
 socket.on('playVideo', () => {
-  console.log('playVideo ran');
   player.playVideo();
   return false;
 });
@@ -189,12 +197,19 @@ socket.on('pauseVideo', () => {
   return false;
 });
 
+// Listening to server; Skips to a certain point in video
+socket.on('seekTo', (time) => {
+  player.seekTo(time, true);
+  return false;
+});
+
 // Listening to server; Loads video once id is recieved
 socket.on('loadVideo', (id) => {
   video.setAttribute(
     'src',
     `https://www.youtube.com/embed/${id}?enablejsapi=1`
   );
+  console.log('loading new video!!!');
 });
 
 // Event Listener on Insert YouTube Link
@@ -207,3 +222,14 @@ youtubeForm.addEventListener('submit', (evt) => {
   // Clears input message
   evt.target.elements['youtube-insert'].value = '';
 });
+
+function checkTime(prevTime, currentTime) {
+  // if (Math.abs(previousTime - currentTime) > 1) {
+  //   console.log('seek');
+  //   socket.emit('toSeek', currentTime);
+  // }
+  if (Math.abs(prevTime - currentTime) > 1) {
+    console.log('SEEKKK!!!');
+    socket.emit('toSeek', currentTime);
+  }
+}
