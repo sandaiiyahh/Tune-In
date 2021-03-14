@@ -129,9 +129,6 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 let player;
 window.onYouTubeIframeAPIReady = function () {
   player = new YT.Player('player', {
-    // height: '390',
-    // width: '640',
-    // videoId: 'tyrVtwE8Gv0',
     playerVars: { autoplay: 1 },
     events: {
       onReady: onPlayerReady,
@@ -144,6 +141,11 @@ window.onYouTubeIframeAPIReady = function () {
 function onPlayerReady(evt) {
   evt.target.playVideo();
 }
+
+function stopVideo() {
+  player.stopVideo();
+}
+
 // The API calls this function when the player's state changes.
 function onPlayerStateChange(event) {
   switch (event.data) {
@@ -151,25 +153,45 @@ function onPlayerStateChange(event) {
       console.log('Video ended.');
       break;
     case 1:
-      console.log('Video playing from ' + player.getCurrentTime());
+      // 1 = Video starts playing
+      console.log('Playing video.');
+      socket.emit('videoPlay');
       break;
     case 2:
-      console.log('Video paused.');
+      // 2 = Video has paused
+      console.log('Paused video.');
+      socket.emit('videoPause');
       break;
   }
 }
+
+// Listening to server; Plays video
+socket.on('playVideo', () => {
+  console.log('playVideo ran');
+  player.playVideo();
+  return false;
+});
+
+// Listening to server; Pauses video
+socket.on('pauseVideo', () => {
+  player.pauseVideo();
+  return false;
+});
 
 // Listening to server; Loads video once id is recieved
 socket.on('loadVideo', (id) => {
   video.setAttribute(
     'src',
-    `https://www.youtube.com/embed/${id}?autoplay=1&enablejsapi=1`
+    `https://www.youtube.com/embed/${id}?enablejsapi=1`
   );
+  player = new YT.Player('player', {
+    playerVars: { autoplay: 1 },
+    events: {
+      onReady: onPlayerReady,
+      onStateChange: onPlayerStateChange,
+    },
+  });
 });
-
-function stopVideo() {
-  player.stopVideo();
-}
 
 // Event Listener on Insert YouTube Link
 youtubeForm.addEventListener('submit', (evt) => {

@@ -60,10 +60,23 @@ io.on('connection', (socket) => {
     io.to(user.room).emit('message', formatMessage(`${user.username}`, msg));
   });
 
+  // Listens for new video URL input
   socket.on('newVideo', (url) => {
     const user = getCurrentUser(socket.id);
     const id = getYouTubeID(url);
     io.to(user.room).emit('loadVideo', id);
+  });
+
+  // Listens for a video paused
+  socket.on('videoPause', () => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit('pauseVideo');
+  });
+
+  // Listens for a video played
+  socket.on('videoPlay', () => {
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit('playVideo');
   });
 
   // Runs when client disconnects
