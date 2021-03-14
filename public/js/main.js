@@ -139,7 +139,18 @@ window.onYouTubeIframeAPIReady = function () {
 
 // The API will call this function when the video player is ready
 function onPlayerReady(evt) {
-  evt.target.playVideo();
+  // evt.target.playVideo();
+  let playButton = document.getElementById('play-button');
+  playButton.addEventListener('click', function () {
+    player.playVideo();
+    socket.emit('videoPlay');
+  });
+
+  let pauseButton = document.getElementById('pause-button');
+  pauseButton.addEventListener('click', function () {
+    player.pauseVideo();
+    socket.emit('videoPause');
+  });
 }
 
 function stopVideo() {
@@ -184,13 +195,6 @@ socket.on('loadVideo', (id) => {
     'src',
     `https://www.youtube.com/embed/${id}?enablejsapi=1`
   );
-  player = new YT.Player('player', {
-    playerVars: { autoplay: 1 },
-    events: {
-      onReady: onPlayerReady,
-      onStateChange: onPlayerStateChange,
-    },
-  });
 });
 
 // Event Listener on Insert YouTube Link

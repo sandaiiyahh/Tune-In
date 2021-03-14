@@ -9,8 +9,7 @@
 }
 
 .video-container {
-  height: 100%;
-  position: relative;
+  margin: auto;
 }
 
 .video-container iframe,
@@ -64,6 +63,23 @@ button:hover {
 }
 
 /* Chat Page */
+
+.pause-play {
+  margin: 5px 0px;
+}
+
+#play-button,
+#pause-button {
+  width: 30px;
+  font-size: 20px;
+  color: #d8645c;
+  cursor: pointer;
+}
+
+#play-button:hover,
+#pause-button:hover {
+  color: #ce4e45;
+}
 
 .youtube-container {
   margin: 10px 10px 0px 0px;
@@ -277,8 +293,12 @@ button:hover {
     width: 100%;
     position: relative;
   }
-  .video-container {
-    height: 100%;
-    display: block;
+  .pause-play,
+  .youtube-container {
+    position: relative;
+    text-align: center;
+  }
+  .pause-play {
+    margin-left: 0;
   }
 }
