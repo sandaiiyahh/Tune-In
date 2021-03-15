@@ -166,16 +166,14 @@ function stopVideo() {
 function onPlayerStateChange(evt) {
   switch (evt.data) {
     case 0:
-      console.log('Video ended.');
+      // 0 = Video ended
       break;
     case 1:
       // 1 = Video starts playing
-      console.log('Playing video.');
       socket.emit('videoPlay');
       let currentTime = player.getCurrentTime();
       if (Math.round(currentTime) === 0) {
         let videoInfo = player.getVideoData();
-        console.log('TITLE RAN');
         socket.emit('sendTitle', videoInfo.title);
       }
       checkTime(prevTime, currentTime);
@@ -183,7 +181,6 @@ function onPlayerStateChange(evt) {
       break;
     case 2:
       // 2 = Video has paused
-      console.log('Paused video.');
       socket.emit('videoPause');
       break;
   }
@@ -213,7 +210,6 @@ socket.on('loadVideo', (id) => {
   //   'src',
   //   `https://www.youtube.com/embed/${id}?enablejsapi=1`
   // );
-  console.log('loading new video!!!');
   player.loadVideoById(id);
   return false;
 });
