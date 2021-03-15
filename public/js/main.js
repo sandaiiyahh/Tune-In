@@ -61,6 +61,7 @@ let picker = new EmojiButton({
 // User's picked emoji gets added to input form
 picker.on('emoji', (emoji) => {
   msgInput.value += emoji;
+  msgInput.focus();
 });
 
 // Event Listener on Emoji Button
