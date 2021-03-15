@@ -145,6 +145,7 @@ let prevTime;
 // The API will call this function when the video player is ready
 function onPlayerReady(evt) {
   evt.target.playVideo();
+
   let playButton = document.getElementById('play-button');
   playButton.addEventListener('click', function () {
     player.playVideo();
@@ -172,7 +173,8 @@ function onPlayerStateChange(evt) {
       // 1 = Video starts playing
       socket.emit('videoPlay');
       let currentTime = player.getCurrentTime();
-      if (Math.round(currentTime) === 0) {
+      if (currentTime < 0.6) {
+        console.log('current time -->', currentTime);
         let videoInfo = player.getVideoData();
         socket.emit('sendTitle', videoInfo.title);
       }

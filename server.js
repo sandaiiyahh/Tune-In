@@ -54,7 +54,6 @@ io.on('connection', (socket) => {
 
   // Listens for sendTitle
   socket.on('sendTitle', (title) => {
-    const user = getCurrentUser(socket.id);
     socket.emit('message', formatMessage(botName, `📺 Now Playing: ${title}`));
   });
 
