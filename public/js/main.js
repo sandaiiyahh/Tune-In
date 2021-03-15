@@ -173,7 +173,7 @@ function onPlayerStateChange(evt) {
       // 1 = Video starts playing
       socket.emit('videoPlay');
       let currentTime = player.getCurrentTime();
-      if (currentTime < 0.6) {
+      if (currentTime < 0.07) {
         console.log('current time -->', currentTime);
         let videoInfo = player.getVideoData();
         socket.emit('sendTitle', videoInfo.title);
