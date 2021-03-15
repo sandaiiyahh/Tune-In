@@ -144,7 +144,7 @@ let prevTime;
 
 // The API will call this function when the video player is ready
 function onPlayerReady(evt) {
-  // evt.target.playVideo();
+  evt.target.playVideo();
   let playButton = document.getElementById('play-button');
   playButton.addEventListener('click', function () {
     player.playVideo();
@@ -183,6 +183,8 @@ function onPlayerStateChange(evt) {
       // 2 = Video has paused
       socket.emit('videoPause');
       break;
+    case 3:
+      socket.emit('videoPlay');
   }
 }
 
