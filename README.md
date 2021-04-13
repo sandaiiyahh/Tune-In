@@ -9,6 +9,7 @@ Through this project, I had a lot of fun implementing the YouTube Player API wit
 - Node.js
 - Express
 - Socket.IO
+- YouTube Player API
 
 # Deployed Link
 https://lets-tune-in.herokuapp.com/
