@@ -13,5 +13,5 @@ Through this project, I had a lot of fun implementing the YouTube Player API wit
 # Deployed Link
 https://lets-tune-in.herokuapp.com/
 
-# Developer
+# ✍️ Developer
 - [Sandy Dai](https://github.com/sandaiiyahh)
